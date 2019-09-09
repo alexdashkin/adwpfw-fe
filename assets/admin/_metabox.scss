@@ -1,0 +1,32 @@
+.#{$prefix}-metabox {
+  h3.heading {
+    margin-top: 3rem;
+  }
+
+  .field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    max-width: 50rem;
+
+    .label {
+      width: 30%;
+      font-size: 14px;
+      font-weight: 600;
+      align-self: center;
+    }
+
+    .input {
+      width: 100%;
+
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+
+    .description {
+      font-size: 13px;
+      font-style: italic;
+    }
+  }
+}

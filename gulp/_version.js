@@ -1,4 +1,4 @@
-const config = require('../gulp-config');
+const config = require('../../../../gulp-config');
 const fs = require('fs');
 
 module.exports = function () {

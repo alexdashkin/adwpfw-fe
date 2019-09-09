@@ -1,4 +1,4 @@
-const config = require('../gulp-config');
+const config = require('../../../../gulp-config');
 const gulp = require('gulp');
 
 gulp.task('copy', function () {

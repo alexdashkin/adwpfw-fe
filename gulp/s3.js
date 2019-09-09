@@ -1,4 +1,4 @@
-const s3params = require('../s3');
+const s3params = require('../../../../s3');
 const gulp = require('gulp');
 const merge = require('merge-stream');
 

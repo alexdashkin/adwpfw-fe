@@ -1,4 +1,4 @@
-const config = require('../gulp-config');
+const config = require('../../../../gulp-config');
 const credentials = require('../ftp');
 const gulp = require('gulp');
 const ftp = require('vinyl-ftp');

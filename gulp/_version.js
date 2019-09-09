@@ -3,8 +3,8 @@ const fs = require('fs');
 
 module.exports = function () {
 	let newVersion;
-	const versionPattern = /([\d]{1,2}\.[\d]{1,2}\.[\d]{1,3})/;
-	const docString = fs.readFileSync(config.paths.config, 'utf8');
+	const versionPattern = /Version:\s*([\d]{1,2}\.[\d]{1,2}\.[\d]{1,3})/i;
+	const docString = fs.readFileSync(config.paths.version, 'utf8');
 	const vNumRexEx = new RegExp(versionPattern);
 	const oldVersion = (vNumRexEx.exec(docString))[1];
 	const versionParts = oldVersion.split('.');

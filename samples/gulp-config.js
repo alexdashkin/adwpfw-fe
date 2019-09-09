@@ -1,4 +1,4 @@
-const name = 'adwpfw';
+const name = 'samrom-extensions';
 const src = './src/';
 const dist = './dist/';
 
@@ -6,28 +6,22 @@ module.exports = {
 	paths: {
 		src,
 		dist,
-		config: src + 'config/main.php',
 		replace: [
 			src + name + '.php'
 		],
-		version: [
-			src + name + '.php',
-			src + 'config/main.php',
-		],
+		version: src + name + '.php',
 		copy: {
 			src: [
-				src + 'assets/css/admin/icons/*',
-				src + 'assets/css/front/app.css',
-				src + 'assets/css/fonts/**/*',
-				src + 'assets/img/**/*',
+				src + 'README.md',
 				src + 'inc/**/*',
 				src + 'tpl/**/*',
 				src + 'vendor/**/*',
 				src + 'config/**/*',
 			],
 		},
-		php: {
-			src: src + 'inc/**/*.php',
+		adwpfwTpl: {
+			src: src + 'vendor/alexdashkin/adwpfw/tpl/**/*',
+			dev: src + 'tpl/adwpfw',
 		},
 		styles: {
 			admin: {

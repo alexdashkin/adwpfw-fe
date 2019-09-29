@@ -39,7 +39,7 @@ export default class {
 				const action = selector.element.val();
 				if (!action) return;
 
-				if (selector.validation && !selector.validation()) return;
+				if (selector.validation && !selector.validation(this)) return;
 
 				const defaultTexts = {
 					normal: 'Do',
@@ -52,7 +52,7 @@ export default class {
 
 				_this.buttonAjax({
 					action: _this.registry.prefix + '_' + action,
-					data: selector.data ? selector.data() : {},
+					data: selector.data ? selector.data(this) : {},
 					button: $(this),
 					texts: selector.texts,
 					callback: selector.callback,
@@ -70,7 +70,7 @@ export default class {
 				e.preventDefault();
 				if (_this.buttonsDisabled) return;
 
-				if (button.validation && !button.validation()) return;
+				if (button.validation && !button.validation(this)) return;
 
 				const defaultTexts = {
 					normal: 'Do',

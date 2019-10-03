@@ -130,10 +130,11 @@ export default class {
 			const id = $container.find('> ' + options.removable).length;
 
 			let parentId = 0;
-			const $parentContainer = $container.parents(options.container);
+			const $parentContainer = $container.parents(options.container).first();
 
 			if ($parentContainer.length) {
-				parentId = $parentContainer.find('> ' + options.removable).length - 1;
+				const $selfRemovable = $container.closest(options.removable);
+				parentId = $parentContainer.find('> ' + options.removable).index($selfRemovable);
 			}
 
 			const template = Handlebars.compile($($this.data('tpl')).html());

@@ -83,19 +83,21 @@
 
   .form-control {
     width: 100%;
-    padding: 0.375rem 0.5rem;
-    font-size: .875rem;
-    line-height: 1.5;
+    padding: 6px 8px;
     color: #505050;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #d4d4d4;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
+  input[type="number"].form-control {
+    padding: 15px 8px;
+  }
+
   select.form-control {
-    height: calc(2.25rem + 2px);
+    height: 38px;
   }
 
   .#{$prefix}-tabs-header {
@@ -119,7 +121,7 @@
     display: none;
     border: none;
 
-    .actions-selector {
+    .#{$prefix}-actions-selector {
       .form-control {
         width: auto;
       }

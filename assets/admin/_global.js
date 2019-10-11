@@ -5,14 +5,6 @@ const $ = jQuery;
 export default class {
 
 	constructor(options) {
-		const prefix = this.registry.prefix;
-
-		this.elements = {
-			wrap: '.' + prefix + '-container',
-			tabs: '.' + prefix + '-tabs-header span.nav-tab',
-			buttons: 'button, .button'
-		};
-
 		const defaults = {
 			unloadNotify: false,
 		};
@@ -20,6 +12,14 @@ export default class {
 		this.settings = Object.assign(defaults, options);
 		this.registry = options.registry;
 		this.formChanged = false;
+
+		const prefix = this.registry.prefix;
+
+		this.elements = {
+			wrap: '.' + prefix + '-container',
+			tabs: '.' + prefix + '-tabs-header span.nav-tab',
+			buttons: 'button, .button'
+		};
 
 		this.ajax = new Ajax({
 			registry: this.registry,

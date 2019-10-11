@@ -3,7 +3,16 @@ import Ajax from './_ajax';
 const $ = jQuery;
 
 export default class {
+
 	constructor(options) {
+		const prefix = this.registry.prefix;
+
+		this.elements = {
+			wrap: '.' + prefix + '-container',
+			tabs: '.' + prefix + '-tabs-header span.nav-tab',
+			buttons: 'button, .button'
+		};
+
 		const defaults = {
 			unloadNotify: false,
 		};
@@ -12,15 +21,9 @@ export default class {
 		this.registry = options.registry;
 		this.formChanged = false;
 
-		this.elements = {
-			wrap: '.' + this.registry.prefix + '.wrap',
-			tabs: '.tabs-header span.nav-tab',
-			buttons: '.button'
-		};
-
 		this.ajax = new Ajax({
 			registry: this.registry,
-			buttons: $(this.elements.wrap).find('button'),
+			buttons: $(this.elements.wrap).find(this.elements.buttons),
 		});
 
 		this.run();
@@ -49,7 +52,7 @@ export default class {
 
 		// Save changes
 		this.ajax.addForms([{
-			element: $wrap.find('form.' + prefix + '-settings'),
+			element: $wrap.find('form.' + prefix + '-form'),
 			action: 'save',
 			texts: {
 				normal: 'Save Changes',
@@ -83,6 +86,7 @@ export default class {
 					url: ajaxurl,
 					method: 'post',
 					delay: 200,
+
 					data(params) {
 						return {
 							action: _this.registry.prefix + '_' + action,
@@ -92,6 +96,7 @@ export default class {
 							}
 						}
 					},
+
 					processResults(data) {
 						return {
 							results: data.data
@@ -113,9 +118,9 @@ export default class {
 		if ($tabs.length - 2 < index) index = $tabs.length - 1;
 
 		$tabs.removeClass('nav-tab-active');
-		$wrap.find('.tabs-header span.nav-tab:eq(' + index + ')').addClass('nav-tab-active');
-		$wrap.find('.tab').hide();
-		$wrap.find('.tab:eq(' + index + ')').fadeIn(200);
+		$wrap.find('.' + prefix + '-tabs-header span.nav-tab:eq(' + index + ')').addClass('nav-tab-active');
+		$wrap.find('.' + prefix + '-tab').hide();
+		$wrap.find('.' + prefix + '-tab:eq(' + index + ')').fadeIn(200);
 		localStorage.setItem(prefix + '_last_tab', index);
 	}
 

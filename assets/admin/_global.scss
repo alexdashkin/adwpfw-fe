@@ -97,7 +97,8 @@
   }
 
   select.form-control {
-    height: 38px;
+    height: 32px;
+    padding: 5px 8px;
   }
 
   .#{$prefix}-tabs-header {
@@ -127,13 +128,31 @@
       }
 
       .button {
-        height: 38px;
+        height: 32px;
       }
     }
 
     .actions-bar {
       .button {
         margin-right: 5px;
+      }
+    }
+  }
+
+  .adwpfw-select2 + .select2 {
+    li {
+      margin: 0;
+    }
+
+    .select2-selection--single {
+      height: 32px;
+
+      .select2-selection__rendered {
+        padding-left: 13px;
+      }
+
+      .select2-selection__arrow {
+        height: 30px;
       }
     }
   }

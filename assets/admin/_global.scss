@@ -90,6 +90,7 @@
     border: 1px solid #d4d4d4;
     border-radius: 4px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
   }
 
   input[type="number"].form-control {
@@ -99,6 +100,10 @@
   select.form-control {
     height: 32px;
     padding: 5px 8px;
+  }
+
+  textarea.form-control {
+    height: 100px;
   }
 
   .#{$prefix}-tabs-header {

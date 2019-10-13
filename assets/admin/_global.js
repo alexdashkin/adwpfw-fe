@@ -1,3 +1,5 @@
+import 'select2';
+import Tooltip from 'tooltip.js';
 import Ajax from './_ajax';
 
 const $ = jQuery;
@@ -61,6 +63,9 @@ export default class {
 			}
 		}]);
 
+		// Tooltips
+		new Tooltip($('.adwpfw-tooltip'));
+
 		// Select2
 		$('.adwpfw-select2').each(function () {
 
@@ -106,7 +111,6 @@ export default class {
 			}
 
 			$select2.select2(select2Options);
-
 		});
 	}
 

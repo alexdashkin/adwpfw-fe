@@ -25,6 +25,10 @@
     }
   }
 
+  .#{$prefix}-heading {
+    margin-top: 2em;
+  }
+
   .#{$prefix}-field {
     display: flex;
     justify-content: space-between;
@@ -43,14 +47,14 @@
       flex: 0 0 70%;
     }
 
-    // todo if desc presents, vertical align shifts up
-    .#{$prefix}-desc {
-      font-size: 13px;
-      font-style: italic;
-    }
-
-    h3 {
-      margin: 20px 0 0 0;
+    .#{$prefix}-help-tip {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      margin: 0 8px;
+      cursor: help;
+      color: #777;
+      visibility: hidden;
     }
 
     label.error {
@@ -145,10 +149,6 @@
   }
 
   .adwpfw-select2 + .select2 {
-    li {
-      margin: 0;
-    }
-
     .select2-selection--single {
       height: 32px;
 

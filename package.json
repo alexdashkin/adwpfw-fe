@@ -7,5 +7,9 @@
     "url": "https://github.com/alexdashkin/adwpfw-fe.git"
   },
   "author": "Alex Dashkin (http://alexdashkin.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "select2": "^4.0",
+    "tooltip.js": "^1.0"
+  }
 }

@@ -9,7 +9,6 @@
   "author": "Alex Dashkin (http://alexdashkin.com)",
   "license": "MIT",
   "devDependencies": {
-    "select2": "^4.0",
-    "tooltip.js": "^1.0"
+    "select2": "^4.0"
   }
 }

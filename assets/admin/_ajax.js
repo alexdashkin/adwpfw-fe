@@ -177,7 +177,7 @@ export default class {
 
 		args = Object.assign(defaults, args);
 
-		const data = Object.assign({nonce: this.registry.nonce}, args.data);
+		const data = Object.assign({_wpnonce: this.settings.nonce}, args.data);
 
 		const ajaxOpts = Object.assign({
 			method: 'post',

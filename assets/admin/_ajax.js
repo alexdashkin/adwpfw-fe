@@ -157,15 +157,19 @@ export default class {
 
 		this.run({
 			ajaxOpts,
-			callback: this.processResponse,
+			callback: this.handleButtonAjaxResponse,
 			callbackArgs,
 			context: this,
 		});
 	}
 
 	run(args) {
+		const _this = this;
+
 		const defaults = {
+			parallel: true,
 			ajaxOpts: {},
+			data: {},
 			callback: null,
 			callbackArgs: {},
 			context: this,
@@ -173,33 +177,24 @@ export default class {
 
 		args = Object.assign(defaults, args);
 
-		const ajaxDefaults = {
+		const data = Object.assign({nonce: this.registry.nonce}, args.data);
+
+		const ajaxOpts = Object.assign({
 			method: 'post',
-			url: ajaxurl,
-		};
+			url: this.settings.url,
+			data,
+		}, args.ajaxOpts);
 
-		args.ajaxOpts = Object.assign(ajaxDefaults, args.ajaxOpts);
+		if (args.parallel) {
+			$.ajax(ajaxOpts)
+				.done(response => _this.handleAjaxResponse(response, args))
+				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}));
 
-		this.qajax(args.ajaxOpts)
-			.done(response => {
-				if (args.callback) {
-					const callbackDefaults = {
-						success: response.success,
-						message: response.message,
-						data: response.data,
-					};
-					args.callback.call(args.context, Object.assign(callbackDefaults, args.callbackArgs));
-				}
-			})
-			.fail((jqXHR, textStatus, errorThrown) => {
-				if (args.callback) {
-					const callbackDefaults = {
-						success: false,
-						message: errorThrown,
-					};
-					args.callback.call(args.context, Object.assign(callbackDefaults, args.callbackArgs));
-				}
-			});
+		} else {
+			this.qajax(ajaxOpts)
+				.done(response => _this.handleAjaxResponse(response, args))
+				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}));
+		}
 	}
 
 	qajax(args) {
@@ -219,7 +214,13 @@ export default class {
 		return promise;
 	}
 
-	processResponse(args) {
+	handleAjaxResponse(response, args) {
+		if (args.callback) {
+			args.callback.call(args.context, Object.assign(response, args.callbackArgs));
+		}
+	}
+
+	handleButtonAjaxResponse(args) {
 		this.log(args.message);
 		this.toggleButtons({buttons: this.settings.buttons, state: 'enable'});
 

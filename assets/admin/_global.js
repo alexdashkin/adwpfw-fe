@@ -63,7 +63,7 @@ export default class {
 		}]);
 
 		// Select2
-		$('.adwpfw-select2').each(function () {
+		$('.' + prefix + '-select2').each(function () {
 
 			const $select2 = $(this);
 			const multiple = $select2.prop('multiple');

@@ -3,6 +3,10 @@
     display: none;
   }
 
+  .bolder {
+    font-weight: 600;
+  }
+
   .clickable {
     cursor: pointer;
     color: #0073aa;
@@ -29,7 +33,7 @@
     margin-top: 2em;
   }
 
-  .adwpfw-tooltip {
+  .#{$prefix}-tooltip {
     position: relative;
 
     .tooltiptext {
@@ -189,7 +193,7 @@
     }
   }
 
-  .adwpfw-select2 + .select2 {
+  .#{$prefix}-select2 + .select2 {
     .select2-selection--single {
       height: 32px;
 

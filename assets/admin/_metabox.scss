@@ -1,11 +1,11 @@
 @import "global";
 
-.#{$prefix}-metabox.#{$prefix}-container {
+.adwpfw-metabox {
   h3.heading {
     margin-top: 3rem;
   }
 
-  .#{$prefix}-control {
+  .adwpfw-control {
     width: 100%;
   }
 }

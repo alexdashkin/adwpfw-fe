@@ -1,4 +1,4 @@
-.#{$prefix}-container {
+.adwpfw {
   .hidden {
     display: none;
   }
@@ -29,11 +29,11 @@
     }
   }
 
-  .#{$prefix}-heading {
+  .adwpfw-heading {
     margin-top: 2em;
   }
 
-  .#{$prefix}-tooltip {
+  .adwpfw-tooltip {
     position: relative;
 
     .tooltiptext {
@@ -74,25 +74,25 @@
     }
   }
 
-  .#{$prefix}-field {
+  .adwpfw-field {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
     max-width: 50rem;
 
-    .#{$prefix}-label {
+    .adwpfw-label {
       flex: 0 0 30%;
       font-size: 14px;
       font-weight: 600;
       align-self: center;
     }
 
-    .#{$prefix}-control {
+    .adwpfw-control {
       flex: 0 0 70%;
     }
 
-    .#{$prefix}-help-tip {
+    .adwpfw-help-tip {
       font-size: 16px;
       width: 16px;
       height: 16px;
@@ -130,8 +130,9 @@
     }
   }
 
-  .form-control {
+  .adwpfw-form-control {
     width: 100%;
+    margin: 0;
     padding: 6px 8px;
     color: #505050;
     background-color: #fff;
@@ -142,20 +143,20 @@
     box-sizing: border-box;
   }
 
-  input[type="number"].form-control {
+  input[type="number"].adwpfw-form-control {
     padding: 15px 8px;
   }
 
-  select.form-control {
+  select.adwpfw-form-control {
     height: 32px;
     padding: 5px 8px;
   }
 
-  textarea.form-control {
+  textarea.adwpfw-form-control {
     height: 100px;
   }
 
-  .#{$prefix}-tabs-header {
+  .adwpfw-tabs-header {
     margin-bottom: 20px;
 
     span {
@@ -172,12 +173,12 @@
     }
   }
 
-  .#{$prefix}-tab {
+  .adwpfw-tab {
     display: none;
     border: none;
 
-    .#{$prefix}-actions-selector {
-      .form-control {
+    .adwpfw-actions-selector {
+      .adwpfw-form-control {
         width: auto;
       }
 
@@ -193,7 +194,7 @@
     }
   }
 
-  .#{$prefix}-select2 + .select2 {
+  .adwpfw-select2 + .select2 {
     .select2-selection--single {
       height: 32px;
 
@@ -207,14 +208,14 @@
     }
   }
 
-  .#{$prefix}-loader {
+  .adwpfw-loader {
     display: none;
     float: right;
     position: relative;
     border: 2px solid rgba(0, 133, 186, 0.2);
     border-left: 2px solid #0085ba;
     transform: translateZ(0);
-    animation: #{$prefix}-loader 1.1s infinite linear;
+    animation: adwpfw-loader 1.1s infinite linear;
     border-radius: 50%;
     width: 15px;
     height: 15px;
@@ -226,7 +227,7 @@
     }
   }
 
-  @keyframes #{$prefix}-loader {
+  @keyframes adwpfw-loader {
     0% {
       transform: rotate(0deg);
     }

@@ -14,11 +14,9 @@ export default class {
 		this.registry = options.registry;
 		this.formChanged = false;
 
-		const prefix = this.registry.prefix;
-
 		this.elements = {
-			wrap: '.' + prefix + '-container',
-			tabs: '.' + prefix + '-tabs-header span.nav-tab',
+			wrap: '.adwpfw',
+			tabs: '.adwpfw-tabs-header span.nav-tab',
 			buttons: 'button, .button'
 		};
 
@@ -53,7 +51,7 @@ export default class {
 
 		// Save changes
 		this.ajax.addForms([{
-			element: $wrap.find('form.' + prefix + '-form'),
+			element: $wrap.find('form.adwpfw-form'),
 			action: 'save',
 			texts: {
 				normal: 'Save Changes',
@@ -63,7 +61,7 @@ export default class {
 		}]);
 
 		// Select2
-		$('.' + prefix + '-select2').each(function () {
+		$('.adwpfw-select2').each(function () {
 
 			const $select2 = $(this);
 			const multiple = $select2.prop('multiple');
@@ -118,9 +116,9 @@ export default class {
 		if ($tabs.length - 2 < index) index = $tabs.length - 1;
 
 		$tabs.removeClass('nav-tab-active');
-		$wrap.find('.' + prefix + '-tabs-header span.nav-tab:eq(' + index + ')').addClass('nav-tab-active');
-		$wrap.find('.' + prefix + '-tab').hide();
-		$wrap.find('.' + prefix + '-tab:eq(' + index + ')').fadeIn(200);
+		$wrap.find('.adwpfw-tabs-header span.nav-tab:eq(' + index + ')').addClass('nav-tab-active');
+		$wrap.find('.adwpfw-tab').hide();
+		$wrap.find('.adwpfw-tab:eq(' + index + ')').fadeIn(200);
 		localStorage.setItem(prefix + '_last_tab', index);
 	}
 

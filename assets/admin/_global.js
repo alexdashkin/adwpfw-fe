@@ -76,9 +76,8 @@ export default class {
 				width: '100%',
 			};
 
-			if ($select2.data('minChars')) {
-				select2Options.minimumInputLength = $select2.data('minChars');
-			}
+			const minChars = $select2.data('minChars');
+			select2Options.minimumInputLength = undefined !== minChars ? minChars : 3;
 
 			if ($select2.data('ajaxAction')) {
 				const action = $select2.data('ajaxAction');

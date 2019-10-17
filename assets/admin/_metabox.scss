@@ -1,11 +1,10 @@
 @import "global";
 
 .adwpfw-metabox {
-  h3.heading {
-    margin-top: 3rem;
-  }
-
-  .adwpfw-control {
-    width: 100%;
+  .adwpfw-field {
+    .adwpfw-control {
+      flex: 0 0 auto;
+      width: 100%;
+    }
   }
 }

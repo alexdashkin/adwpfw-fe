@@ -82,17 +82,18 @@
     max-width: 50rem;
 
     .adwpfw-label {
-      flex: 0 0 30%;
+      flex: 1 1 30%;
       font-size: 14px;
       font-weight: 600;
       align-self: center;
     }
 
     .adwpfw-control {
-      flex: 0 0 70%;
+      flex: 1 1 70%;
     }
 
     .adwpfw-help-tip {
+      flex: 0 0 16px;
       font-size: 16px;
       width: 16px;
       height: 16px;

@@ -134,6 +134,7 @@
 
   .adwpfw-form-control {
     width: 100%;
+    height: 32px;
     margin: 0;
     padding: 6px 8px;
     color: #505050;
@@ -145,12 +146,7 @@
     box-sizing: border-box;
   }
 
-  input[type="number"].adwpfw-form-control {
-    padding: 15px 8px;
-  }
-
   select.adwpfw-form-control {
-    height: 32px;
     padding: 5px 8px;
   }
 

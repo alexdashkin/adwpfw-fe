@@ -114,13 +114,18 @@ export default class {
 		const $wrap = $(this.elements.wrap);
 		const $tabs = $wrap.find(this.elements.tabs);
 
-		if ($tabs.length - 2 < index) index = $tabs.length - 1;
+		if ($tabs.length - 2 < index) {
+			index = $tabs.length - 1;
+		}
 
 		$tabs.removeClass('nav-tab-active');
-		$wrap.find('.adwpfw-tabs-header span.nav-tab:eq(' + index + ')').addClass('nav-tab-active');
+		$wrap.find('.adwpfw-tabs-header span.nav-tab').eq(index).addClass('nav-tab-active');
 		$wrap.find('.adwpfw-tab').hide();
-		$wrap.find('.adwpfw-tab:eq(' + index + ')').fadeIn(200);
+		$wrap.find('.adwpfw-tab').eq(index).fadeIn(200);
+
 		localStorage.setItem(prefix + '_last_tab', index);
+
+		$wrap.trigger('adwpfw.tab_switched', index);
 	}
 
 	addRemove(options, Handlebars) {

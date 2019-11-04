@@ -32,14 +32,23 @@ export default class {
 
 		selectors.forEach(selector => {
 			const $button = selector.element.siblings('.button');
+			
 			$button.click(function (e) {
 				e.preventDefault();
-				if (_this.buttonsDisabled) return;
+
+				if (_this.buttonsDisabled) {
+					return;
+				}
 
 				const action = selector.element.val();
-				if (!action) return;
+				
+				if (!action) {
+					return;
+				}
 
-				if (selector.validation && !selector.validation(this)) return;
+				if (selector.validation && !selector.validation.call(selector.context ? selector.context : this, this)) {
+					return;
+				}
 
 				const defaultTexts = {
 					normal: 'Do',
@@ -52,7 +61,7 @@ export default class {
 
 				_this.buttonAjax({
 					action: _this.registry.prefix + '_' + action,
-					data: selector.data ? selector.data(this) : {},
+					data: selector.data ? selector.data.call(selector.context ? selector.context : this, this) : {},
 					button: $(this),
 					texts: selector.texts,
 					callback: selector.callback,
@@ -68,9 +77,14 @@ export default class {
 		buttons.forEach(button => {
 			button.element.click(function (e) {
 				e.preventDefault();
-				if (_this.buttonsDisabled) return;
+				
+				if (_this.buttonsDisabled) {
+					return;
+				}
 
-				if (button.validation && !button.validation(this)) return;
+				if (button.validation && !button.validation.call(button.context ? button.context : this, this)) {
+					return;
+				}
 
 				const defaultTexts = {
 					normal: 'Do',
@@ -83,7 +97,7 @@ export default class {
 
 				_this.buttonAjax({
 					action: _this.registry.prefix + '_' + button.action,
-					data: button.data ? button.data(this) : {},
+					data: button.data ? button.data.call(button.context ? button.context : this, this) : {},
 					button: $(this),
 					texts: button.texts,
 					callback: button.callback,

@@ -203,12 +203,12 @@ export default class {
 		if (args.parallel) {
 			$.ajax(ajaxOpts)
 				.done(response => _this.handleAjaxResponse(response, args))
-				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}));
+				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}, args));
 
 		} else {
 			this.qajax(ajaxOpts)
 				.done(response => _this.handleAjaxResponse(response, args))
-				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}));
+				.fail((jqXHR, textStatus, errorThrown) => _this.handleAjaxResponse({success: false, message: errorThrown}, args));
 		}
 	}
 
@@ -218,7 +218,7 @@ export default class {
 		const promise = dfd.promise();
 
 		function doRequest(next) {
-			jqXHR = $.post(args);
+			jqXHR = $.ajax(args);
 			jqXHR.done(dfd.resolve)
 				.fail(dfd.reject)
 				.then(next, next);

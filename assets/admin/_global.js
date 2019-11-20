@@ -15,7 +15,7 @@ export default class {
 		this.formChanged = false;
 
 		this.elements = {
-			wrap: '.adwpfw',
+			wrap: '.adwpfw.' + this.registry.prefix,
 			tabs: '.adwpfw-tabs-header span.nav-tab',
 			buttons: 'button, .button'
 		};

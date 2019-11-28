@@ -8,7 +8,7 @@
   },
   "author": "Alex Dashkin (https://alexdashkin.com)",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "node-sass-tilde-importer": "*",
     "@sentry/browser": "*",
     "select2": "^4.0",

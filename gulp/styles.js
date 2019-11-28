@@ -7,10 +7,12 @@ const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
 const mqpacker = require('css-mqpacker');
 const notify = require('gulp-notify');
+const tildeImporter = require('node-sass-tilde-importer');
 
 const sassOptions = {
 	errLogToConsole: true,
-	outputStyle: 'expanded'
+	outputStyle: 'expanded',
+	importer: tildeImporter
 };
 
 const postCssOpts = [

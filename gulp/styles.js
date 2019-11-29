@@ -33,7 +33,7 @@ const postCssOpts = [
 
 	gulp.task('styles:prod:' + type, function () {
 		return gulp.src(config.paths.styles[type].src)
-			.pipe(sass().on('error', notify.onError(function (error) {
+			.pipe(sass(sassOptions).on('error', notify.onError(function (error) {
 				return 'Problem file : ' + error.message;
 			})))
 			.pipe(postcss(postCssOpts))

@@ -37,7 +37,7 @@ const postCssOpts = [
 				return 'Problem file : ' + error.message;
 			})))
 			.pipe(postcss(postCssOpts))
-			.pipe(cssnano({outputStyle: 'compressed'}))
+			.pipe(cssnano({outputStyle: 'compressed', zindex: false}))
 			.pipe(gulp.dest(config.paths.styles[type].prod));
 	});
 });

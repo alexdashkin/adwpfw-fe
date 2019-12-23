@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const jshint = require('gulp-jshint');
 const stylish = require('jshint-stylish');
 const named = require('vinyl-named');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpackStream = require('webpack-stream');
 
 ['admin', 'front'].forEach(type => {
@@ -24,6 +25,17 @@ const webpackStream = require('webpack-stream');
 			.pipe(named())
 			.pipe(webpackStream({
 				mode: 'production',
+				optimization: {
+					minimizer: [
+						new TerserPlugin({
+							terserOptions: {
+								output: {
+									comments: false,
+								},
+							},
+						}),
+					],
+				},
 				externals: {
 					jquery: 'jQuery'
 				}

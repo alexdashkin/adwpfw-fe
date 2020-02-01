@@ -129,6 +129,7 @@ export default class {
 	}
 
 	addRemove(options, Handlebars) {
+		const _this = this;
 		const $wrap = $(options.wrap);
 
 		$wrap.on('click', options.add, function (e) {
@@ -149,11 +150,23 @@ export default class {
 			const template = Handlebars.compile($($this.data('tpl')).html());
 
 			$(template({id, parentId})).insertBefore($this);
+
+			_this.reIndex(options);
 		});
 
 		$wrap.on('click', options.remove, function (e) {
 			e.preventDefault();
 			$(this).closest(options.removable).remove();
+			_this.reIndex(options);
+		});
+	}
+
+	reIndex(options) {
+		$(options.container).find(options.removable).each(function (index) {
+			$(this).find('[name]').each(function () {
+				const $this = $(this);
+				$this.attr('name', $this.attr('name').replace(/\[\d*\]/, '[' + index + ']'));
+			});
 		});
 	}
 }

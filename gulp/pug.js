@@ -9,7 +9,7 @@ gulp.task('pug', function () {
 			// debug: true
 		}))
 		.pipe(rename(function (path) {
-			path.extname = ".html";
+			path.extname = config.paths.pug.ext;
 		}))
 		.pipe(gulp.dest(config.paths.pug.prod))
 });

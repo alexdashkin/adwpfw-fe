@@ -34,6 +34,7 @@
     "gulp-uglify-es": "*",
     "gulp-webp": "*",
     "gulp-htmlmin": "*",
+    "gulp-pug": "*",
     "gulp-zip": "*",
     "imagemin-pngquant": "*",
     "jshint": "*",

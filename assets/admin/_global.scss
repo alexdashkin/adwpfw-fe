@@ -207,6 +207,17 @@
         height: 30px;
       }
     }
+
+    .select2-results__option,
+    .select2-search--inline,
+    .select2-selection__choice {
+      margin-bottom: 0;
+    }
+
+    .select2-search__field {
+      line-height: normal;
+      min-height: auto;
+    }
   }
 
   .adwpfw-loader {

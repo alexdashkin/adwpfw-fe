@@ -148,7 +148,7 @@ export default class {
 		const params = Object.assign(this.settings, args);
 
 		if (params.button) {
-			params.texts.normal = params.button.html();
+			params.texts.normal = params.texts.normal ? params.texts.normal : params.button.html();
 			params.button.hide().addClass('updating-message').html(params.texts.processing).fadeIn();
 		}
 

@@ -193,6 +193,8 @@
     .select2-search__field {
       line-height: normal;
       min-height: auto;
+      border: none;
+      box-shadow: none;
     }
   }
 
@@ -225,6 +227,8 @@
 }
 
 .adwpfw-metabox {
+  margin-top: 1rem;
+
   .adwpfw-field {
     .adwpfw-label {
       font-weight: normal;

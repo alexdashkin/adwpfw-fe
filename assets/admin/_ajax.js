@@ -149,7 +149,7 @@ export default class {
 
 		if (params.button) {
 			params.texts.normal = params.texts.normal ? params.texts.normal : params.button.html();
-			params.button.hide().addClass('updating-message').html(params.texts.processing).fadeIn();
+			params.button.addClass('updating-message').html(params.texts.processing);
 		}
 
 		const callbackArgs = Object.assign({
@@ -242,7 +242,7 @@ export default class {
 		if (args.button) {
 			const text = args.success ? args.texts.success : args.texts.error;
 			const css = args.success ? 'updated-message' : 'error';
-			args.button.hide().removeClass('updating-message').addClass(css).html(text).fadeIn();
+			args.button.removeClass('updating-message').addClass(css).html(text);
 			setTimeout(() => args.button.removeClass(css).html(args.texts.normal), 2000);
 		}
 

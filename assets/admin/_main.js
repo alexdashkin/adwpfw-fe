@@ -66,18 +66,18 @@ export default class {
 			const $select2 = $(this);
 			const multiple = $select2.prop('multiple');
 			const $placeholder = $select2.find('option').first();
-			const placeholder = $placeholder.text();
 
-			$placeholder.remove();
+			if (multiple) {
+				$placeholder.remove();
+			}
 
 			const select2Options = {
 				multiple,
-				placeholder,
 				width: '100%',
 			};
 
 			const minChars = $select2.data('minChars');
-			select2Options.minimumInputLength = undefined !== minChars ? minChars : 3;
+			select2Options.minimumInputLength = undefined !== minChars ? minChars : 0;
 
 			if ($select2.data('ajaxAction')) {
 				const action = $select2.data('ajaxAction');
@@ -103,6 +103,9 @@ export default class {
 						};
 					}
 				}
+			} else {
+				const minItemsForSearch = $select2.data('minItemsForSearch');
+				select2Options.minimumResultsForSearch = undefined !== minItemsForSearch ? minItemsForSearch : 10;
 			}
 
 			$select2.select2(select2Options);

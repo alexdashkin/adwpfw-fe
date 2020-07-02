@@ -34,6 +34,19 @@ export default class {
 		const $tabs = $wrap.find(this.elements.tabs);
 		const _this = this;
 
+		// Send ajax on notices dismiss
+		$('.adwpfw-notice .notice-dismiss').click(function () {
+			const data = {
+				action: _this.registry.prefix + '_notice_dismiss',
+				_wpnonce: _this.registry.nonce,
+				data: {id: $(this).parent().data('id')}
+			};
+
+			_this.ajax.run({
+				ajaxOpts: {data},
+			});
+		});
+
 		// Save changes reminder
 		if (this.settings.unloadNotify) {
 			$('form input').change(() => _this.formChanged = true);

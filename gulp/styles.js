@@ -7,6 +7,7 @@ const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
 const mqpacker = require('css-mqpacker');
 const notify = require('gulp-notify');
+const rename = require('gulp-rename');
 const tildeImporter = require('node-sass-tilde-importer');
 
 const sassOptions = {
@@ -28,7 +29,8 @@ const postCssOpts = [
 				return 'Problem file : ' + error.message;
 			})))
 			.pipe(sourcemaps.write())
-			.pipe(gulp.dest(config.paths.styles[type].dev));
+			.pipe(gulp.dest(config.paths.styles[type].dev))
+			.pipe(gulp.dest(config.paths.styles[type].prod));
 	});
 
 	gulp.task('styles:prod:' + type, function () {
@@ -38,6 +40,9 @@ const postCssOpts = [
 			})))
 			.pipe(postcss(postCssOpts))
 			.pipe(cssnano({zindex: false, outputStyle: 'compressed', discardComments: {removeAll: true}}))
+			.pipe(rename(function (path) {
+				path.extname = '.min' + path.extname;
+			}))
 			.pipe(gulp.dest(config.paths.styles[type].prod));
 	});
 });

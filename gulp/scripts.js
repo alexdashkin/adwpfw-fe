@@ -4,6 +4,7 @@ const jshint = require('gulp-jshint');
 const stylish = require('jshint-stylish');
 const named = require('vinyl-named');
 const TerserPlugin = require('terser-webpack-plugin');
+const rename = require('gulp-rename');
 const webpackStream = require('webpack-stream');
 
 ['admin', 'front'].forEach(type => {
@@ -17,7 +18,8 @@ const webpackStream = require('webpack-stream');
 					jquery: 'jQuery'
 				}
 			}))
-			.pipe(gulp.dest(config.paths.scripts[type].dev));
+			.pipe(gulp.dest(config.paths.scripts[type].dev))
+			.pipe(gulp.dest(config.paths.scripts[type].prod));
 	});
 
 	gulp.task('scripts:prod:' + type, function () {
@@ -39,6 +41,9 @@ const webpackStream = require('webpack-stream');
 				externals: {
 					jquery: 'jQuery'
 				}
+			}))
+			.pipe(rename(function (path) {
+				path.extname = '.min' + path.extname;
 			}))
 			.pipe(gulp.dest(config.paths.scripts[type].prod));
 	});

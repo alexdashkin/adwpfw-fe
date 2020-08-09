@@ -174,30 +174,13 @@
   }
 
   .adwpfw-select2 + .select2 {
-    .select2-selection--single {
-      height: 32px;
-      border-color: #7e8993;
+    .select2-search--inline {
+      margin: 5px 5px 0 0;
 
-      .select2-selection__rendered {
-        padding-left: 13px;
+      .select2-search__field {
+        width: 100% !important;
+        margin: 0 !important;
       }
-
-      .select2-selection__arrow {
-        height: 30px;
-      }
-    }
-
-    .select2-results__option,
-    .select2-search--inline,
-    .select2-selection__choice {
-      margin-bottom: 0;
-    }
-
-    .select2-search__field {
-      line-height: normal;
-      min-height: auto;
-      border: none;
-      box-shadow: none;
     }
   }
 

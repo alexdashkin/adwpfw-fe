@@ -1,4 +1,5 @@
 import 'select2';
+import Logger from './_logger';
 import Ajax from './_ajax';
 
 const $ = jQuery;
@@ -24,6 +25,8 @@ export default class {
 			registry: this.registry,
 			buttons: $(this.elements.wrap).find(this.elements.buttons),
 		});
+
+		this.logger = new Logger(this.registry.logger ? this.registry.logger : false, this.registry.prefix);
 
 		this.run();
 	}
@@ -74,23 +77,20 @@ export default class {
 		}]);
 
 		// Select2
-		$('.adwpfw-select2').each(function () {
-
+		$('.' + this.registry.prefix + ' .adwpfw-select2').each(function () {
 			const $select2 = $(this);
-			const multiple = $select2.prop('multiple');
-			const $placeholder = $select2.find('option').first();
 
-			if (multiple) {
-				$placeholder.remove();
+			// Avoid applying select2 twice
+			if ($select2.hasClass('select2-hidden-accessible')) {
+				return;
 			}
 
 			const select2Options = {
-				multiple,
 				width: '100%',
+				multiple: $select2.prop('multiple'),
+				placeholder: $select2.data('placeholder'),
+				minimumInputLength: $select2.data('minChars'),
 			};
-
-			const minChars = $select2.data('minChars');
-			select2Options.minimumInputLength = undefined !== minChars ? minChars : 0;
 
 			if ($select2.data('ajaxAction')) {
 				const action = $select2.data('ajaxAction');
@@ -117,8 +117,7 @@ export default class {
 					}
 				}
 			} else {
-				const minItemsForSearch = $select2.data('minItemsForSearch');
-				select2Options.minimumResultsForSearch = undefined !== minItemsForSearch ? minItemsForSearch : 10;
+				select2Options.minimumResultsForSearch = $select2.data('minItemsForSearch');
 			}
 
 			$select2.select2(select2Options);

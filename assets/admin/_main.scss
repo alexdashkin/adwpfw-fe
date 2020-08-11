@@ -174,12 +174,18 @@
   }
 
   .adwpfw-select2 + .select2 {
+    .select2-selection__choice {
+      margin-bottom: 0;
+    }
+
     .select2-search--inline {
       margin: 5px 5px 0 0;
 
       .select2-search__field {
         width: 100% !important;
         margin: 0 !important;
+        line-height: normal;
+        min-height: auto;
       }
     }
   }

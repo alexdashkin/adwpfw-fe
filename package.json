@@ -1,7 +1,7 @@
 {
   "name": "@alexdashkin/adwpfw",
   "description": "Simple WordPress Framework Helpers",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/alexdashkin/adwpfw-fe.git"

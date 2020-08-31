@@ -151,7 +151,8 @@ export default class {
 			e.preventDefault();
 
 			const $this = $(this);
-			const $container = $this.closest(options.container);
+			const $wrapper = $this.closest(options.wrap);
+			const $container = $this.siblings(options.container);
 			const id = $container.find('> ' + options.removable).length;
 
 			let parentId = 0;
@@ -162,11 +163,15 @@ export default class {
 				parentId = $parentContainer.find('> ' + options.removable).index($selfRemovable);
 			}
 
-			const template = Handlebars.compile($($this.data('tpl')).html());
+			const template = Handlebars.compile($wrapper.find($this.data('tpl')).html());
 
-			$(template({id, parentId})).insertBefore($this);
+			$container.append(template({id, parentId}));
 
 			_this.reIndex(options);
+
+			if (options.callback) {
+				options.callback($this);
+			}
 		});
 
 		$wrap.on('click', options.remove, function (e) {

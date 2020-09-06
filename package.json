@@ -1,7 +1,7 @@
 {
   "name": "@alexdashkin/adwpfw",
   "description": "Simple WordPress Framework Helpers",
-  "version": "5.0.1",
+  "version": "5.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/alexdashkin/adwpfw-fe.git"
@@ -12,6 +12,7 @@
     "node-sass-tilde-importer": "*",
     "@sentry/browser": "*",
     "select2": "^4.0",
+    "handlebars": "*",
     "autoprefixer": "*",
     "css-mqpacker": "*",
     "del": "*",

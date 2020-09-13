@@ -7,55 +7,46 @@ const $ = jQuery;
 
 export default class {
 
-	constructor(options) {
-		const defaults = {
-			unloadNotify: false,
-		};
-
-		this.settings = Object.assign(defaults, options);
-		this.registry = options.registry;
-		this.formChanged = false;
+	constructor(opts) {
+		this.settings = opts;
+		this.config = opts.config;
 
 		this.elements = {
-			wrap: '.adwpfw.' + this.registry.prefix,
+			wrap: '.adwpfw.' + this.config.prefix,
 			tabs: '.adwpfw-tabs-header span.nav-tab',
 			buttons: 'button, .button'
 		};
 
 		this.ajax = new Ajax({
-			registry: this.registry,
+			config: this.config,
 			buttons: $(this.elements.wrap).find(this.elements.buttons),
 		});
 
-		this.logger = new Logger(this.registry.logger ? this.registry.logger : false, this.registry.prefix);
+		this.logger = new Logger(this.config.logger ? this.config.logger : false, this.config.prefix);
 
 		this.run();
 	}
 
 	run() {
-		const prefix = this.registry.prefix;
+		const prefix = this.config.prefix;
 		const $wrap = $(this.elements.wrap);
 		const $tabs = $wrap.find(this.elements.tabs);
 		const _this = this;
 
 		// Send ajax on notices dismiss
 		$('.adwpfw-notice .notice-dismiss').click(function () {
+
+			const noticeId = $(this).parent().data('id');
+
 			const data = {
-				action: _this.registry.prefix + '_notice_dismiss',
-				_wpnonce: _this.registry.nonce,
-				data: {id: $(this).parent().data('id')}
+				action: 'dismiss_notice_' + noticeId,
+				_wpnonce: _this.config.nonce,
 			};
 
 			_this.ajax.run({
 				ajaxOpts: {data},
 			});
 		});
-
-		// Save changes reminder
-		if (this.settings.unloadNotify) {
-			$('form input').change(() => _this.formChanged = true);
-			window.onbeforeunload = () => _this.formChanged ? true : undefined;
-		}
 
 		// Initial tab
 		let tabIndex = localStorage.getItem(prefix + '_last_tab') || 0;
@@ -78,7 +69,7 @@ export default class {
 		}]);
 
 		// Select2
-		$('.' + this.registry.prefix + ' .adwpfw-select2').each(function () {
+		$('.' + this.config.prefix + ' .adwpfw-select2').each(function () {
 			const $select2 = $(this);
 
 			// Avoid applying select2 twice
@@ -103,8 +94,8 @@ export default class {
 
 					data(params) {
 						return {
-							action: _this.registry.prefix + '_' + action,
-							_wpnonce: _this.registry.nonce,
+							action: _this.config.prefix + '_' + action,
+							_wpnonce: _this.config.nonce,
 							data: {
 								q: params.term
 							}
@@ -126,7 +117,7 @@ export default class {
 	}
 
 	switchTab(index) {
-		const prefix = this.registry.prefix;
+		const prefix = this.config.prefix;
 		const $wrap = $(this.elements.wrap);
 		const $tabs = $wrap.find(this.elements.tabs);
 

@@ -9,7 +9,7 @@ export default class {
 			data: {},
 			button: null,
 			buttons: null,
-			nonce: options.registry.nonce,
+			nonce: options.config.nonce,
 			callback: null,
 			context: this,
 			texts: {
@@ -22,7 +22,7 @@ export default class {
 
 		this.settings = Object.assign(defaults, options);
 		this.buttonsDisabled = false;
-		this.registry = options.registry;
+		this.config = options.config;
 
 		this.ajaxQueue = $({});
 	}
@@ -32,7 +32,7 @@ export default class {
 
 		selectors.forEach(selector => {
 			const $button = selector.element.siblings('.button');
-			
+
 			$button.click(function (e) {
 				e.preventDefault();
 
@@ -41,7 +41,7 @@ export default class {
 				}
 
 				const action = selector.element.val();
-				
+
 				if (!action) {
 					return;
 				}
@@ -60,7 +60,7 @@ export default class {
 				selector.texts = Object.assign(defaultTexts, selector.texts);
 
 				_this.buttonAjax({
-					action: _this.registry.prefix + '_' + action,
+					action: _this.config.prefix + '_' + action,
 					data: selector.data ? selector.data.call(selector.context ? selector.context : this, this) : {},
 					button: $(this),
 					texts: selector.texts,
@@ -77,7 +77,7 @@ export default class {
 		buttons.forEach(button => {
 			button.element.click(function (e) {
 				e.preventDefault();
-				
+
 				if (_this.buttonsDisabled) {
 					return;
 				}
@@ -96,7 +96,7 @@ export default class {
 				button.texts = Object.assign(defaultTexts, button.texts);
 
 				_this.buttonAjax({
-					action: _this.registry.prefix + '_' + button.action,
+					action: _this.config.prefix + '_' + button.action,
 					data: button.data ? button.data.call(button.context ? button.context : this, this) : {},
 					button: $(this),
 					texts: button.texts,
@@ -128,7 +128,7 @@ export default class {
 				form.texts = Object.assign(defaultTexts, form.texts);
 
 				_this.buttonAjax({
-					action: _this.registry.prefix + '_' + form.action,
+					action: _this.config.prefix + '_' + form.action + '_' + $this.data('slug'),
 					data: {form: $this.serialize()},
 					button: $button,
 					texts: form.texts,
@@ -258,7 +258,7 @@ export default class {
 	}
 
 	log(message) {
-		if (this.registry.debug) {
+		if (this.config.debug) {
 			console.log(message);
 		}
 	}

@@ -2,14 +2,15 @@ const $ = jQuery;
 
 export default class {
 
-	constructor(options) {
+	constructor(opts) {
 		const defaults = {
-			action: '',
+			prefix: null,
+			action: null,
 			url: window.ajaxurl,
 			data: {},
 			button: null,
-			buttons: null,
-			nonce: options.config.nonce,
+			buttons: $('button, .button'),
+			nonce: null,
 			callback: null,
 			context: this,
 			texts: {
@@ -20,9 +21,9 @@ export default class {
 			}
 		};
 
-		this.settings = Object.assign(defaults, options);
+		this.settings = Object.assign(defaults, opts);
 		this.buttonsDisabled = false;
-		this.config = options.config;
+		this.config = opts.config;
 
 		this.ajaxQueue = $({});
 	}
@@ -141,7 +142,7 @@ export default class {
 
 	buttonAjax(args) {
 		if (this.buttonsDisabled) {
-			this.log('Buttons Disabled');
+			// this.log('Buttons Disabled');
 			return;
 		}
 
@@ -236,7 +237,7 @@ export default class {
 	}
 
 	handleButtonAjaxResponse(args) {
-		this.log(args.message);
+		// this.log(args.message);
 		this.toggleButtons({buttons: this.settings.buttons, state: 'enable'});
 
 		if (args.button) {
@@ -257,9 +258,11 @@ export default class {
 		this.buttonsDisabled = disabled;
 	}
 
+/*
 	log(message) {
 		if (this.config.debug) {
 			console.log(message);
 		}
 	}
+*/
 }

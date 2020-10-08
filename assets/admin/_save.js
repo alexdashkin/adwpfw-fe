@@ -1,10 +1,13 @@
+import AjaxForm from './_ajax-form';
+
 const $ = jQuery;
 
 export default class {
 
 	constructor(opts) {
 		const defaults = {
-			selector: '.adwpfw.' + opts.prefix,
+			ajax: null, // Ajax object
+			selector: 'form.adwpfw-form',
 		};
 
 		this.opts = Object.assign(defaults, opts);
@@ -13,14 +16,19 @@ export default class {
 	}
 
 	run() {
-		this.opts.ajax.addForms([{
-			element: $(this.opts.selector).find('form.adwpfw-form'),
-			action: 'save',
+		const selector = this.opts.selector;
+		const $form = $(selector);
+		const slug = $form.data('slug');
+
+		new AjaxForm({
+			ajax: this.opts.ajax,
+			selector,
+			action: 'save_' + slug,
 			texts: {
 				normal: 'Save Changes',
 				processing: 'Saving...',
 				success: 'Saved',
 			}
-		}]);
+		});
 	}
 }

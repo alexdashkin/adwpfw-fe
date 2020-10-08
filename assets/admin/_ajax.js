@@ -22,8 +22,8 @@ export default class {
 		};
 
 		this.settings = Object.assign(defaults, opts);
+		this.prefix = this.settings.prefix;
 		this.buttonsDisabled = false;
-		this.config = opts.config;
 
 		this.ajaxQueue = $({});
 	}
@@ -61,7 +61,7 @@ export default class {
 				selector.texts = Object.assign(defaultTexts, selector.texts);
 
 				_this.buttonAjax({
-					action: _this.config.prefix + '_' + action,
+					action: _this.prefix + '_' + action,
 					data: selector.data ? selector.data.call(selector.context ? selector.context : this, this) : {},
 					button: $(this),
 					texts: selector.texts,
@@ -97,7 +97,7 @@ export default class {
 				button.texts = Object.assign(defaultTexts, button.texts);
 
 				_this.buttonAjax({
-					action: _this.config.prefix + '_' + button.action,
+					action: _this.prefix + '_' + button.action,
 					data: button.data ? button.data.call(button.context ? button.context : this, this) : {},
 					button: $(this),
 					texts: button.texts,
@@ -129,7 +129,7 @@ export default class {
 				form.texts = Object.assign(defaultTexts, form.texts);
 
 				_this.buttonAjax({
-					action: _this.config.prefix + '_' + form.action + '_' + $this.data('slug'),
+					action: _this.prefix + '_' + form.action + '_' + $this.data('slug'),
 					data: {form: $this.serialize()},
 					button: $button,
 					texts: form.texts,
@@ -237,7 +237,6 @@ export default class {
 	}
 
 	handleButtonAjaxResponse(args) {
-		// this.log(args.message);
 		this.toggleButtons({buttons: this.settings.buttons, state: 'enable'});
 
 		if (args.button) {
@@ -257,12 +256,4 @@ export default class {
 		args.buttons.attr('disabled', disabled);
 		this.buttonsDisabled = disabled;
 	}
-
-/*
-	log(message) {
-		if (this.config.debug) {
-			console.log(message);
-		}
-	}
-*/
 }

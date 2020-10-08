@@ -5,7 +5,19 @@ const $ = jQuery;
 export default class {
 
 	constructor(opts) {
-		$('.' + opts.prefix + ' .adwpfw-select2').each(function () {
+		const defaults = {
+			selector: '.' + opts.prefix + ' .adwpfw-select2',
+		};
+
+		this.opts = Object.assign(defaults, opts);
+
+		this.run();
+	}
+
+	run() {
+		const _this = this;
+
+		$(this.opts.selector).each(function () {
 			const $select2 = $(this);
 
 			// Avoid applying select2 twice
@@ -30,8 +42,8 @@ export default class {
 
 					data(params) {
 						return {
-							action: opts.prefix + '_' + action,
-							_wpnonce: opts.nonce,
+							action: _this.opts.prefix + '_' + action,
+							_wpnonce: _this.opts.nonce,
 							data: {
 								q: params.term
 							}

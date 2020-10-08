@@ -5,6 +5,13 @@ const $ = jQuery;
 export default class {
 
 	constructor(opts) {
+		this.opts = opts;
+		this.run();
+	}
+
+	run() {
+		const opts = this.opts;
+
 		['add', 'remove'].forEach(function (action) {
 			$(opts.wrap).on('click', opts[action], function (e) {
 				e.preventDefault();

@@ -16,14 +16,9 @@ export default class {
 	}
 
 	run() {
-		const selector = this.opts.selector;
-		const $form = $(selector);
-		const slug = $form.data('slug');
-
 		new AjaxForm({
 			ajax: this.opts.ajax,
-			selector,
-			action: 'save_' + slug,
+			selector: this.opts.selector,
 			texts: {
 				normal: 'Save Changes',
 				processing: 'Saving...',

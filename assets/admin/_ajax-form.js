@@ -43,7 +43,7 @@ export default class {
 			$button.addClass('updating-message').html(texts.processing);
 
 			const ajaxOpts = {
-				action: opts.action,
+				action: opts.action ? opts.action : 'save_' + $this.data('slug'),
 				data: {form: $this.serialize()},
 			}
 

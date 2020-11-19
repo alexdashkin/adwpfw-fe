@@ -8,7 +8,7 @@ export default class {
 			nonce: '',
 			ajaxOpts: {
 				method: 'POST',
-				url: ajaxurl,
+				url: window.ajaxurl,
 			},
 		};
 

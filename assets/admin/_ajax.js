@@ -21,7 +21,7 @@ export default class {
 		ajaxOpts.data = {
 			action: this.opts.prefix + '_' + args.action,
 			_wpnonce: this.opts.nonce,
-			data: args.data,
+			...args.data,
 		};
 
 		return $.ajax(ajaxOpts);

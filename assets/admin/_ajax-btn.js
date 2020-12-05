@@ -5,6 +5,7 @@ export default class {
 	constructor(opts) {
 		const defaults = {
 			ajax: null, // Ajax object
+			ajaxOpts: {}, // extra ajax opts
 			selector: null, // string
 			action: null, // string
 			data: null, // callback
@@ -42,14 +43,14 @@ export default class {
 			texts.normal = texts.normal ? texts.normal : $button.html();
 			$button.addClass('updating-message').html(texts.processing);
 
-			const ajaxOpts = {
+			const ajaxData = {
 				action: opts.action,
 				data: opts.data ? opts.data.call(opts.context, this) : {},
 			}
 
 			_this.disabled = true;
 
-			opts.ajax.run(ajaxOpts)
+			opts.ajax.run(ajaxData)
 				.done(response => _this.handleResponse(response, $button))
 				.fail((jqXHR, textStatus, errorThrown) => _this.handleResponse({success: false, message: errorThrown}, $button));
 		});

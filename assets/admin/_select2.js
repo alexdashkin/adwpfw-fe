@@ -44,9 +44,7 @@ export default class {
 						return {
 							action: _this.opts.prefix + '_' + action,
 							_wpnonce: _this.opts.nonce,
-							data: {
-								q: params.term
-							}
+							q: params.term,
 						}
 					},
 

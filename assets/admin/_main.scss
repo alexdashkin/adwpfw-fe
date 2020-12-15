@@ -211,9 +211,16 @@
 
   &.adwpfw-context-side {
     .adwpfw-field {
+      flex-wrap: wrap;
+
       .adwpfw-label {
-        width: 100%;
+        flex: 0 0 100%;
         margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .adwpfw-control {
+        flex: 0 0 100%;
       }
     }
   }

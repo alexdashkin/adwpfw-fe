@@ -21,7 +21,8 @@ export default class {
 			}
 		};
 
-		this.opts = Object.assign(defaults, opts);
+		opts.texts = {...defaults.texts, ...opts.texts};
+		this.opts = {...defaults, ...opts};
 
 		this.run();
 	}

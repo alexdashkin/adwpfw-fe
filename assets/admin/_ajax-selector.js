@@ -29,27 +29,27 @@ export default class {
 		const _this = this;
 		const opts = this.opts;
 
-		$(opts.selector).siblings('.button').click(function (e) {
+		$(opts.selector).find('button').on('click', function (e) {
 			e.preventDefault();
 
 			if (_this.disabled || (opts.validator && !opts.validator.call(opts.context, this))) {
 				return;
 			}
 
-			const action = selector.element.val();
+			const $button = $(this);
+			const action = $button.closest(opts.selector).find('select').val();
 
 			if (!action) {
 				return;
 			}
 
-			const $button = $(this);
 			const texts = opts.texts;
 
 			texts.normal = texts.normal ? texts.normal : $button.html();
 			$button.addClass('updating-message').html(texts.processing);
 
 			const ajaxOpts = {
-				action: opts.action,
+				action,
 				data: opts.data ? opts.data.call(opts.context, this) : {},
 			}
 

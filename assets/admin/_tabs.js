@@ -23,7 +23,7 @@ export default class {
 		this.switchTab(tabIndex);
 
 		// Switch tab on click
-		$tabs.click(function () {
+		$tabs.on('click', function () {
 			_this.switchTab($(this).index())
 		});
 	}

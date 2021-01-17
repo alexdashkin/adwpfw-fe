@@ -31,7 +31,7 @@ export default class {
 		const _this = this;
 		const opts = this.opts;
 
-		$(opts.selector).click(function (e) {
+		$(opts.selector).on('click', function (e) {
 			e.preventDefault();
 
 			if (_this.disabled || (opts.validator && !opts.validator.call(opts.context, this))) {

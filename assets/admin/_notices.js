@@ -17,7 +17,7 @@ export default class {
 	run() {
 		const _this = this;
 
-		$(this.opts.selector).click(function () {
+		$(this.opts.selector).on('click', function () {
 
 			const noticeId = $(this).parent().data('id');
 

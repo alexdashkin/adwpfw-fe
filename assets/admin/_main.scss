@@ -37,96 +37,64 @@
     }
   }
 
-  .adwpfw-tooltip {
-    position: relative;
-
-    .adwpfw-tooltip-wrapper {
-      position: absolute;
-      left: 50%;
-
-      .adwpfw-tooltip-text {
-        visibility: hidden;
-        background-color: black;
-        color: white;
-        text-align: center;
-        border-radius: 6px;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity .5s;
-        font-family: sans-serif;
-        font-size: 12px;
-        line-height: 1.5;
-        position: relative;
-        top: -45px;
-        left: -50%;
-        margin: 0;
-        white-space: nowrap;
-        padding: 5px 10px;
-
-        &::after {
-          content: " ";
-          position: absolute;
-          left: 50%;
-          bottom: -10px;
-          margin-left: -5px;
-          border: 5px solid transparent;
-          border-top-color: black;        }
-      }
-    }
-
-    &:hover {
-      .adwpfw-tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-
   .adwpfw-heading {
     margin: 1em 0 0 0;
   }
 
-  .adwpfw-field {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1000px;
-
-    &:not(:last-child) {
+  .adwpfw-fields {
+    .adwpfw-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1000px;
       margin-bottom: 1rem;
-    }
 
-    .adwpfw-label {
-      flex: 0 0 30%;
-      align-self: center;
-      font-size: 14px;
-      font-weight: 600;
-      position: relative;
+      .adwpfw-label {
+        flex: 0 0 30%;
+        align-self: center;
+        font-size: 14px;
+        font-weight: 600;
+        position: relative;
 
-      .adwpfw-help-tip {
-        position: absolute;
-        top: calc(50% - 8px);
-        right: 6px;
-        flex: 0 0 16px;
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
-        color: #777;
-        cursor: help;
+        .adwpfw-help-tip {
+          position: absolute;
+          top: calc(50% - 8px);
+          right: 6px;
+          flex: 0 0 16px;
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+          color: #777;
+          cursor: help;
+
+          .dashicons {
+            font-size: 16px;
+          }
+        }
       }
-    }
 
-    .adwpfw-control {
-      flex: 0 0 70%;
-    }
+      .adwpfw-control {
+        flex: 0 0 70%;
 
-    label.error {
-      color: red;
-      margin-left: 10px;
-    }
+        input[type="text"],
+        input[type="number"],
+        input[type="search"],
+        input[type="url"],
+        select,
+        textarea {
+          width: 100%;
+        }
+      }
 
-    input.error, select.error {
-      border: 1px solid red !important;
+      label.error {
+        color: red;
+        margin-left: 10px;
+      }
+
+      input.error, select.error {
+        border: 1px solid red !important;
+      }
     }
   }
 

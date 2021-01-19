@@ -44,6 +44,7 @@
     "select2": "*",
     "vinyl-named-with-path": "*",
     "webpack": "*",
-    "webpack-stream": "*"
+    "webpack-stream": "*",
+    "microtip": "*"
   }
 }

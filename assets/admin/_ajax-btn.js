@@ -68,7 +68,7 @@ export default class {
 		setTimeout(() => $button.removeClass(css).html(opts.texts.normal), 2000);
 
 		if (opts.callback) {
-			opts.callback.call(opts.context, opts);
+			opts.callback.call(opts.context, response);
 		}
 	}
 }

@@ -21,7 +21,7 @@ export default class {
 	run() {
 		const _this = this;
 
-		this.settings.form.submit(function (e) {
+		this.settings.form.on('submit', function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 

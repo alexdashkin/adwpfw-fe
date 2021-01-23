@@ -75,11 +75,12 @@
       }
 
       .adwpfw-control {
-        flex: 0 0 70%;
+        width: 100%;
 
         input[type="text"],
         input[type="number"],
         input[type="search"],
+        input[type="email"],
         input[type="url"],
         select,
         textarea {

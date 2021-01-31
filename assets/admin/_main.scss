@@ -1,4 +1,8 @@
 .adwpfw {
+  * {
+    box-sizing: border-box;
+  }
+
   .d-flex {
     display: flex;
   }

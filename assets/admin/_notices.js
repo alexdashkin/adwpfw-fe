@@ -1,34 +1,29 @@
 const $ = jQuery;
 
+let options = {};
+
+const defaults = {
+	selector: '.adwpfw-notice .notice-dismiss',
+	actionPrefix: 'dismiss_notice_',
+};
+
 // Send ajax on notices dismiss
-export default class {
+export default opts => {
 
-	constructor(opts) {
-		const defaults = {
-			selector: '.adwpfw-notice .notice-dismiss',
-			actionPrefix: 'dismiss_notice_',
-		};
+	options = {...defaults, ...opts};
 
-		this.opts = Object.assign(defaults, opts);
+	$(options.selector).on('click', function () {
+		const noticeId = $(this).parent().data('id');
 
-		this.run();
-	}
+		const ajaxData = {
+			url: window.ajaxurl,
+			method: 'post',
+			data: {
+				action: options.actionPrefix + noticeId,
+				nonce: options.nonce,
+			}
+		}
 
-	run() {
-		const _this = this;
-
-		$(this.opts.selector).on('click', function () {
-
-			const noticeId = $(this).parent().data('id');
-
-			const data = {
-				action: _this.opts.actionPrefix + noticeId,
-				_wpnonce: _this.opts.nonce,
-			};
-
-			_this.opts.ajax.run({
-				ajaxOpts: {data},
-			});
-		});
-	}
+		$.ajax(ajaxData);
+	});
 }

@@ -1,29 +1,18 @@
-import AjaxForm from './_ajax-form';
+import ajaxForm from './_ajax-form';
 
 const $ = jQuery;
 
-export default class {
+export default opts => {
+	const defaults = {
+		action: '', // Ajax action name
+		selector: 'form.adwpfw-form',
+		texts: {
+			normal: 'Save Changes',
+			processing: 'Saving...',
+			success: 'Saved',
+			error: 'Error',
+		}
+	};
 
-	constructor(opts) {
-		const defaults = {
-			ajax: null, // Ajax object
-			selector: 'form.adwpfw-form',
-		};
-
-		this.opts = Object.assign(defaults, opts);
-
-		this.run();
-	}
-
-	run() {
-		new AjaxForm({
-			ajax: this.opts.ajax,
-			selector: this.opts.selector,
-			texts: {
-				normal: 'Save Changes',
-				processing: 'Saving...',
-				success: 'Saved',
-			}
-		});
-	}
+	ajaxForm({...defaults, ...opts});
 }

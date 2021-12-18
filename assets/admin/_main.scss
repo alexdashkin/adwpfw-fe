@@ -94,6 +94,10 @@
         }
       }
 
+      .adwpfw-description {
+        margin-left: 1em;
+      }
+
       label.error {
         color: red;
         margin-left: 10px;
@@ -103,6 +107,10 @@
         border: 1px solid red !important;
       }
     }
+  }
+
+  .adwpfw-actions-bar {
+    margin-top: 2em;
   }
 
   .adwpfw-tabs-header {
@@ -123,7 +131,6 @@
   }
 
   .adwpfw-tab {
-    display: none;
     border: none;
 
     .actions-bar {

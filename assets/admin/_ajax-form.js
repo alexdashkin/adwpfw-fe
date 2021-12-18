@@ -1,72 +1,68 @@
 const $ = jQuery;
 
-export default class {
+let disabled = false;
+let options = {};
 
-	constructor(opts) {
-		const defaults = {
-			ajax: null, // Ajax object
-			selector: null, // string
-			action: null, // string
-			validator: null, // callback
-			callback: null, // response handler callback
-			callbackArgs: {},
-			context: this,
-			texts: {
-				normal: 'Do',
-				processing: 'Processing...',
-				success: 'Done',
-				error: 'Error',
-			}
-		};
-
-		this.opts = Object.assign(defaults, opts);
-
-		this.run();
+const defaults = {
+	selector: null, // string
+	action: null, // string
+	nonce: null, // string
+	validator: null, // callback
+	callback: null, // response handler callback
+	callbackArgs: {},
+	texts: {
+		normal: 'Do',
+		processing: 'Processing...',
+		success: 'Done',
+		error: 'Error',
 	}
+};
 
-	run() {
-		const _this = this;
-		const opts = this.opts;
+const handleResponse = (response, $button) => {
+	disabled = false;
 
-		$(opts.selector).on('submit', function (e) {
-			e.preventDefault();
+	const text = response.success ? options.texts.success : options.texts.error;
+	const css = response.success ? 'updated-message' : 'error';
 
-			if (_this.disabled || (opts.validator && !opts.validator.call(opts.context, this))) {
-				return;
-			}
+	$button.removeClass('updating-message').addClass(css).html(text);
+	setTimeout(() => $button.removeClass(css).html(options.texts.normal), 2000);
 
-			const $this = $(this);
-			const $button = $this.find('button[type="submit"]');
-			const texts = opts.texts;
-
-			texts.normal = texts.normal ? texts.normal : $button.html();
-			$button.addClass('updating-message').html(texts.processing);
-
-			const ajaxOpts = {
-				action: opts.action ? opts.action : 'save_' + $this.data('slug'),
-				data: {form: $this.serialize()},
-			}
-
-			_this.disabled = true;
-
-			opts.ajax.run(ajaxOpts)
-				.done(response => _this.handleResponse(response, $button))
-				.fail((jqXHR, textStatus, errorThrown) => _this.handleResponse({success: false, message: errorThrown}, $button));
-		});
+	if (options.callback) {
+		options.callback(response);
 	}
+}
 
-	handleResponse(response, $button) {
-		this.disabled = false;
+export default opts => {
+	options = {...defaults, ...opts};
 
-		const opts = this.opts;
-		const text = response.success ? opts.texts.success : opts.texts.error;
-		const css = response.success ? 'updated-message' : 'error';
+	$(options.selector).on('submit', function (e) {
+		e.preventDefault();
 
-		$button.removeClass('updating-message').addClass(css).html(text);
-		setTimeout(() => $button.removeClass(css).html(opts.texts.normal), 2000);
-
-		if (opts.callback) {
-			opts.callback.call(opts.context, response);
+		if (disabled || (options.validator && !options.validator(this))) {
+			return;
 		}
-	}
+
+		const $form = $(this);
+		const $button = $form.find('button[type="submit"]');
+		const texts = options.texts;
+
+		texts.normal = texts.normal ? texts.normal : $button.html();
+		$button.addClass('updating-message').html(texts.processing);
+
+		const ajaxData = {
+			url: window.ajaxurl,
+			method: 'post',
+			data: {
+				action: opts.action ? opts.action : $form.data('action'),
+				nonce: options.nonce,
+				form: $form.serialize(),
+			}
+		}
+
+		disabled = true;
+
+		$.ajax(ajaxData)
+			.done(response => handleResponse(response, $button))
+			.fail((jqXHR, textStatus, errorThrown) => handleResponse({success: false, message: errorThrown}, $button));
+	});
 }

@@ -1,6 +1,6 @@
 const config = require('../../../../gulp-config');
 const gulp = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('gulp-cssnano');
 const autoprefixer = require('autoprefixer');
@@ -29,8 +29,7 @@ const postCssOpts = [
 				return 'Problem file : ' + error.message;
 			})))
 			.pipe(sourcemaps.write())
-			.pipe(gulp.dest(config.paths.styles[type].dev))
-			.pipe(gulp.dest(config.paths.styles[type].prod));
+			.pipe(gulp.dest(config.paths.styles[type].dev));
 	});
 
 	gulp.task('styles:prod:' + type, function () {
@@ -40,9 +39,6 @@ const postCssOpts = [
 			})))
 			.pipe(postcss(postCssOpts))
 			.pipe(cssnano({zindex: false, svgo: false, outputStyle: 'compressed', discardComments: {removeAll: true}}))
-			.pipe(rename(function (path) {
-				path.extname = '.min' + path.extname;
-			}))
 			.pipe(gulp.dest(config.paths.styles[type].prod));
 	});
 });

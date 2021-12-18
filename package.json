@@ -1,7 +1,7 @@
 {
   "name": "@alexdashkin/adwpfw",
   "description": "Simple WordPress Framework Helpers",
-  "version": "8.2.0",
+  "version": "10.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/alexdashkin/adwpfw-fe.git"
@@ -34,6 +34,7 @@
     "gulp-uglify-es": "*",
     "gulp-webp": "*",
     "gulp-zip": "*",
+    "sass": "*",
     "handlebars": "*",
     "imagemin-pngquant": "*",
     "jshint": "*",

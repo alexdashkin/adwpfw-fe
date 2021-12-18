@@ -6,7 +6,7 @@ export default class {
 			color: 'blue'
 		};
 
-		this.opts = Object.assign(defaults, opts);
+		this.opts = {...defaults, ...opts};
 	}
 
 	log(message, prefix = '', color = '') {

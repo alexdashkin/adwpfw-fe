@@ -1,74 +1,69 @@
 const $ = jQuery;
 
-export default class {
+let disabled = false;
 
-	constructor(opts) {
-		const defaults = {
-			ajax: null, // Ajax object
-			ajaxOpts: {}, // extra ajax opts
-			selector: null, // string
-			action: null, // string
-			data: null, // callback
-			validator: null, // callback
-			callback: null, // response handler callback
-			callbackArgs: {},
-			context: this,
-			texts: {
-				normal: 'Do',
-				processing: 'Processing...',
-				success: 'Done',
-				error: 'Error',
-			}
-		};
-
-		opts.texts = {...defaults.texts, ...opts.texts};
-		this.opts = {...defaults, ...opts};
-
-		this.run();
+const defaults = {
+	selector: null, // string
+	action: null, // string
+	nonce: null, // string
+	data: null, // callback
+	validator: null, // callback
+	callback: null, // response handler callback
+	callbackArgs: {},
+	texts: {
+		// normal: 'Do',
+		processing: 'Processing...',
+		success: 'Done',
+		error: 'Error',
 	}
+};
 
-	run() {
-		const _this = this;
-		const opts = this.opts;
+const handleResponse = (response, $button, opts) => {
+	disabled = false;
 
-		$(opts.selector).on('click', function (e) {
-			e.preventDefault();
+	const text = response.success ? opts.texts.success : opts.texts.error;
+	const css = response.success ? 'updated-message' : 'error';
 
-			if (_this.disabled || (opts.validator && !opts.validator.call(opts.context, this))) {
-				return;
-			}
+	$button.removeClass('updating-message').addClass(css).html(text);
+	setTimeout(() => $button.removeClass(css).html(opts.texts.normal), 2000);
 
-			const $button = $(this);
-			const texts = opts.texts;
-
-			texts.normal = texts.normal ? texts.normal : $button.html();
-			$button.addClass('updating-message').html(texts.processing);
-
-			const ajaxData = {
-				action: opts.action,
-				data: opts.data ? opts.data.call(opts.context, this) : {},
-			}
-
-			_this.disabled = true;
-
-			opts.ajax.run(ajaxData)
-				.done(response => _this.handleResponse(response, $button))
-				.fail((jqXHR, textStatus, errorThrown) => _this.handleResponse({success: false, message: errorThrown}, $button));
-		});
+	if (opts.callback) {
+		opts.callback(response);
 	}
+}
 
-	handleResponse(response, $button) {
-		this.disabled = false;
+export default opts => {
+	opts.texts = {...defaults.texts, ...opts.texts};
+	opts = {...defaults, ...opts};
 
-		const opts = this.opts;
-		const text = response.success ? opts.texts.success : opts.texts.error;
-		const css = response.success ? 'updated-message' : 'error';
+	$(opts.selector).on('click', function (e) {
+		e.preventDefault();
 
-		$button.removeClass('updating-message').addClass(css).html(text);
-		setTimeout(() => $button.removeClass(css).html(opts.texts.normal), 2000);
-
-		if (opts.callback) {
-			opts.callback.call(opts.context, response);
+		if (disabled || (opts.validator && !opts.validator(this))) {
+			return;
 		}
-	}
+
+		const $button = $(this);
+		const texts = opts.texts;
+		const data = opts.data ? opts.data(this) : {};
+
+		texts.normal = texts.normal ? texts.normal : $button.html();
+		$button.addClass('updating-message').html(texts.processing);
+
+		const ajaxData = {
+			url: window.ajaxurl,
+			method: 'post',
+			data: {
+				action: opts.action ? opts.action : $button.data('action'),
+				nonce: opts.nonce,
+				...data,
+			}
+		}
+
+		disabled = true;
+
+		$.ajax(ajaxData)
+			.done(response => handleResponse(response, $button, opts))
+			.fail((jqXHR, textStatus, errorThrown) => handleResponse({success: false, message: errorThrown}, $button, opts));
+	});
 }

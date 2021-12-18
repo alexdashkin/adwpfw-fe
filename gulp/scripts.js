@@ -18,8 +18,7 @@ const webpackStream = require('webpack-stream');
 					jquery: 'jQuery'
 				}
 			}))
-			.pipe(gulp.dest(config.paths.scripts[type].dev))
-			.pipe(gulp.dest(config.paths.scripts[type].prod));
+			.pipe(gulp.dest(config.paths.scripts[type].dev));
 	});
 
 	gulp.task('scripts:prod:' + type, function () {
@@ -41,9 +40,6 @@ const webpackStream = require('webpack-stream');
 				externals: {
 					jquery: 'jQuery'
 				}
-			}))
-			.pipe(rename(function (path) {
-				path.extname = '.min' + path.extname;
 			}))
 			.pipe(gulp.dest(config.paths.scripts[type].prod));
 	});

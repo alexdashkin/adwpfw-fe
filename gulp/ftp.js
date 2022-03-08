@@ -1,10 +1,19 @@
-const config = require('../../../../gulp-config');
-const credentials = require('../ftp');
+const params = require('../../../../ftp');
 const gulp = require('gulp');
-const ftp = require('vinyl-ftp');
+const merge = require('merge-stream');
 
-gulp.task('ftp', function () {
-	const conn = ftp.create(credentials.credentials);
-	return gulp.src(config.names.file + '.zip')
-		.pipe(conn.dest(credentials.dest))
+gulp.task('ftp', () => {
+	const streams = [];
+
+	params.forEach(item => {
+		const ftp = require('vinyl-ftp');
+		const conn = ftp.create(item.credentials);
+
+		streams.push(
+			gulp.src(item.file)
+				.pipe(conn.dest(item.dest))
+		);
+	});
+
+	return merge(streams);
 });

@@ -1,6 +1,6 @@
 const config = require('../../../../gulp-config');
 const gulp = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
+const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('gulp-cssnano');
 const autoprefixer = require('autoprefixer');

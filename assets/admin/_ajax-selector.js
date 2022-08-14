@@ -1,7 +1,5 @@
 const $ = jQuery;
-
 let disabled = false;
-let options = {};
 
 const defaults = {
 	selector: null, // string
@@ -19,22 +17,22 @@ const defaults = {
 	}
 };
 
-const handleResponse = (response, $button) => {
-	disabled = false;
-
-	const text = response.success ? options.texts.success : options.texts.error;
-	const css = response.success ? 'updated-message' : 'error';
-
-	$button.removeClass('updating-message').addClass(css).html(text);
-	setTimeout(() => $button.removeClass(css).html(options.texts.normal), 2000);
-
-	if (options.callback) {
-		options.callback(response);
-	}
-}
-
 export default opts => {
-	options = {...defaults, ...opts};
+	const options = {...defaults, ...opts};
+
+	const handleResponse = (response, $button) => {
+		disabled = false;
+
+		const text = response.success ? options.texts.success : options.texts.error;
+		const css = response.success ? 'updated-message' : 'error';
+
+		$button.removeClass('updating-message').addClass(css).html(text);
+		setTimeout(() => $button.removeClass(css).html(options.texts.normal), 2000);
+
+		if (options.callback) {
+			options.callback(response);
+		}
+	}
 
 	$(options.selector).find('button').on('click', function (e) {
 		e.preventDefault();

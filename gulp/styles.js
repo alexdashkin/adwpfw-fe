@@ -1,58 +1,68 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const cssnano = require('gulp-cssnano');
-const autoprefixer = require('autoprefixer');
-const postcss = require('gulp-postcss');
-const mqpacker = require('css-mqpacker');
-const notify = require('gulp-notify');
-const rename = require('gulp-rename');
-const tildeImporter = require('node-sass-tilde-importer');
+import gulp from 'gulp';
+import webpack from 'webpack-stream';
+import named from 'vinyl-named-with-path';
+import CssExtractor from 'mini-css-extract-plugin';
+import JsRemover from 'webpack-remove-empty-scripts';
 
-const sassOptions = {
-	errLogToConsole: true,
-	outputStyle: 'expanded',
-	importer: tildeImporter
+export default ({src, dest}, type) => {
+    let webpackConfig = {};
+
+    switch (type) {
+        case 'dev': {
+            webpackConfig = {
+                // watch: true,
+                mode: 'development',
+                plugins: [new CssExtractor(), new JsRemover({})],
+                devtool: 'inline-source-map',
+                module: {
+                    rules: [
+                        {
+                            test: /\.scss$/,
+                            use: [
+                                CssExtractor.loader,
+                                'css-loader',
+                                'sass-loader'
+                            ]
+                        },
+                    ],
+                },
+            }
+
+            break;
+        }
+        case 'prod': {
+            webpackConfig = {
+                mode: 'production',
+                plugins: [new CssExtractor(), new JsRemover({})],
+                module: {
+                    rules: [
+                        {
+                            test: /\.scss$/,
+                            use: [
+                                CssExtractor.loader,
+                                'css-loader',
+                                {
+                                    loader: 'postcss-loader',
+                                    options: {
+                                        postcssOptions: {
+                                            plugins: [
+                                                'autoprefixer',
+                                                'css-mqpacker'
+                                            ],
+                                        }
+                                    }
+                                },
+                                'sass-loader'
+                            ]
+                        },
+                    ],
+                },
+            }
+        }
+    }
+
+    return gulp.src(src)
+        .pipe(named())
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(dest));
 };
-
-const postCssOpts = [
-	autoprefixer(),
-	mqpacker
-];
-
-['admin', 'front'].forEach(type => {
-	gulp.task('styles:dev:' + type, function () {
-		return gulp.src(config.paths.styles[type].src)
-			.pipe(sourcemaps.init())
-			.pipe(sass(sassOptions).on('error', notify.onError(function (error) {
-				return 'Problem file : ' + error.message;
-			})))
-			.pipe(sourcemaps.write())
-			.pipe(gulp.dest(config.paths.styles[type].dev));
-	});
-
-	gulp.task('styles:prod:' + type, function () {
-		return gulp.src(config.paths.styles[type].src)
-			.pipe(sass(sassOptions).on('error', notify.onError(function (error) {
-				return 'Problem file : ' + error.message;
-			})))
-			.pipe(postcss(postCssOpts))
-			.pipe(cssnano({reduceIdents: false, zindex: false, svgo: false, outputStyle: 'compressed', discardComments: {removeAll: true}}))
-			.pipe(gulp.dest(config.paths.styles[type].prod));
-	});
-});
-
-gulp.task('styles:dev',
-	gulp.parallel(
-		'styles:dev:admin',
-		'styles:dev:front',
-	),
-);
-
-gulp.task('styles:prod',
-	gulp.parallel(
-		'styles:prod:admin',
-		'styles:prod:front',
-	),
-);

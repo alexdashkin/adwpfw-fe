@@ -1,68 +1,47 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
-const jshint = require('gulp-jshint');
-const stylish = require('jshint-stylish');
-const named = require('vinyl-named-with-path');
-const TerserPlugin = require('terser-webpack-plugin');
-const rename = require('gulp-rename');
-const webpackStream = require('webpack-stream');
+import gulp from 'gulp';
+import webpack from 'webpack-stream';
+import named from 'vinyl-named-with-path';
+import TerserPlugin from 'terser-webpack-plugin';
 
-['admin', 'front'].forEach(type => {
-	gulp.task('scripts:dev:' + type, () => {
-		return gulp.src(config.paths.scripts[type].src)
-			.pipe(named())
-			.pipe(webpackStream({
-				mode: 'development',
-				devtool: 'inline-source-map',
-				externals: {
-					jquery: 'jQuery'
-				}
-			}))
-			.pipe(gulp.dest(config.paths.scripts[type].dev));
-	});
+export default ({src, dest}, type) => {
+    let webpackConfig = {};
 
-	gulp.task('scripts:prod:' + type, function () {
-		return gulp.src(config.paths.scripts[type].src)
-			.pipe(named())
-			.pipe(webpackStream({
-				mode: 'production',
-				optimization: {
-					minimizer: [
-						new TerserPlugin({
-							terserOptions: {
-								output: {
-									comments: false,
-								},
-							},
-						}),
-					],
-				},
-				externals: {
-					jquery: 'jQuery'
-				}
-			}))
-			.pipe(gulp.dest(config.paths.scripts[type].prod));
-	});
+    switch (type) {
+        case 'dev': {
+            webpackConfig = {
+                watch: true,
+                mode: 'development',
+                devtool: 'inline-source-map',
+                externals: {
+                    jquery: 'jQuery'
+                }
+            }
 
-	gulp.task('scripts:test:' + type, function () {
-		return gulp.src(config.paths.scripts[type].src)
-			.pipe(jshint({
-				esversion: 6
-			}))
-			.pipe(jshint.reporter(stylish));
-	});
-});
+            break;
+        }
+        case 'prod': {
+            webpackConfig = {
+                mode: 'production',
+                optimization: {
+                    minimizer: [
+                        new TerserPlugin({
+                            terserOptions: {
+                                output: {
+                                    comments: false,
+                                },
+                            },
+                        }),
+                    ],
+                },
+                externals: {
+                    jquery: 'jQuery'
+                }
+            }
+        }
+    }
 
-gulp.task('scripts:dev',
-	gulp.series(
-		'scripts:dev:admin',
-		'scripts:dev:front',
-	),
-);
-
-gulp.task('scripts:prod',
-	gulp.series(
-		'scripts:prod:admin',
-		'scripts:prod:front',
-	),
-);
+    return gulp.src(src)
+        .pipe(named())
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(dest));
+};

@@ -1,7 +1,3 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
+import gulp from 'gulp';
 
-gulp.task('copy', function () {
-	return gulp.src(config.paths.copy.src, {base: config.paths.src, follow: true})
-		.pipe(gulp.dest(config.paths.dist))
-});
+export default ({src, base, dest}) => gulp.src(src, {base, follow: true}).pipe(gulp.dest(dest));

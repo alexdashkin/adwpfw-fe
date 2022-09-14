@@ -1,11 +1,6 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
-const replace = require('gulp-replace');
-const version = require('./_version');
+import fs from 'fs';
 
-gulp.task('version', function () {
-	const versions = version();
-	return gulp.src(config.paths.version, {base: config.paths.src})
-		.pipe(replace(versions.oldVersion, versions.newVersion))
-		.pipe(gulp.dest(config.paths.src));
-});
+export default file => {
+    const fileContents = fs.readFileSync(file, 'utf8');
+    return fileContents.match(/Version:\s*(\d{1,2}\.\d{1,2}\.\d{1,3})/i)[1];
+};

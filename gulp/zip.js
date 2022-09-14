@@ -1,18 +1,10 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
-const rename = require('gulp-rename');
-const zip = require('gulp-zip');
-const version = require('./_version');
+import gulp from 'gulp';
+import rename from 'gulp-rename';
+import gulpZip from 'gulp-zip';
 
-gulp.task('zip', function () {
-	const versions = version();
-
-	return gulp.src(config.paths.zip, {base: '.'})
-		.pipe(rename(function (path) {
-			path.dirname = path.dirname.replace('dist', config.names.file);
-		}))
-		.pipe(zip(config.names.file + '.zip'))
-		.pipe(gulp.dest('.'))
-		.pipe(rename(config.names.file + '-' + versions.oldVersion + '.zip'))
-		.pipe(gulp.dest('.'));
-});
+export default ({src, dest, name}) => {
+    return gulp.src(src, {base: '.'})
+        .pipe(rename(path => path.dirname = path.dirname.replace('prod', name)))
+        .pipe(gulpZip(name + '.zip'))
+        .pipe(gulp.dest(dest))
+};

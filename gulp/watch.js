@@ -1,14 +1,5 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
+import gulp from 'gulp';
+import copy from './copy.js';
 
-gulp.task('watch:styles', function () {
-	return gulp.watch(config.paths.styles.src,
-		gulp.series('styles:dev'));
-});
+export default config => gulp.watch(config.src, () => copy(config));
 
-gulp.task('watch:scripts', function () {
-	return gulp.watch(config.paths.scripts.src,
-		gulp.series('scripts:dev'));
-});
-
-gulp.task('watch', gulp.parallel('watch:styles', 'watch:scripts'));

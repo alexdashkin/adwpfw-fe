@@ -1,19 +1,9 @@
-const params = require('../../../../ftp');
-const gulp = require('gulp');
-const merge = require('merge-stream');
+import gulp from 'gulp';
+import ftp from 'vinyl-ftp';
 
-gulp.task('ftp', () => {
-	const streams = [];
+export default ({file, dest, credentials}) => {
+    const conn = ftp.create(credentials);
 
-	params.forEach(item => {
-		const ftp = require('vinyl-ftp');
-		const conn = ftp.create(item.credentials);
-
-		streams.push(
-			gulp.src(item.file)
-				.pipe(conn.dest(item.dest))
-		);
-	});
-
-	return merge(streams);
-});
+    return gulp.src(file)
+        .pipe(conn.dest(dest))
+};

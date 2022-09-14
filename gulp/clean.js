@@ -1,7 +1,3 @@
-const config = require('../../../../gulp-config');
-const gulp = require('gulp');
-const del = require('del');
+import {deleteAsync} from 'del';
 
-gulp.task('clean', function () {
-	return del([config.paths.dist]);
-});
+export default path => deleteAsync(path);

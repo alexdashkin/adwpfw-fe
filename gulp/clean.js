@@ -1,3 +1,3 @@
 import {deleteAsync} from 'del';
 
-export default path => deleteAsync(path);
+export default path => deleteAsync(path, {force: true});

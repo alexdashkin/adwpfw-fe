@@ -10,7 +10,7 @@ export default ({src, dest}, type) => {
     switch (type) {
         case 'dev': {
             webpackConfig = {
-                // watch: true,
+                watch: true,
                 mode: 'development',
                 plugins: [new CssExtractor(), new JsRemover({})],
                 devtool: 'inline-source-map',

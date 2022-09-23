@@ -1,6 +1,4 @@
-import ajaxForm from './_ajax-form';
-
-const $ = jQuery;
+import ajaxForm from './_ajax-form.js';
 
 export default opts => {
 	const defaults = {
